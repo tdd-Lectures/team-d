@@ -7,7 +7,9 @@ import 'package:tdd_intro/conways.dart';
 class ConwaysLifeAlgorithm implements LifeAlgorithm {
   @override
   bool isAlive(bool cell, int neighbours) {
-    if (cell && neighbours == 1) return false;
-    return true;
+    if (cell && neighbours == 2 || neighbours == 3) {
+      return true;
+    }
+    return false;
   }
 }
