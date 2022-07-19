@@ -17,6 +17,10 @@ void main() {
       var sum = Calculator.add("2");
       expect(sum, 2);
     });
+    test("Input not a number return 0 ", (){
+      var sum = Calculator.add('a');
+      expect(sum,0);
+    });
   });
 
   group("Input is two numbers", () {
@@ -37,4 +41,7 @@ void main() {
       expect(sum, 1);
     });
   });
+
+
+
 }
