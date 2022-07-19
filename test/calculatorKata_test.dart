@@ -40,6 +40,27 @@ void main() {
       var sum = Calculator.add("1,");
       expect(sum, 1);
     });
+
+    test("Input are 1,a return the 1", () {
+      var sum = Calculator.add("1,a");
+      expect(sum, 1);
+    });
+
+    test("Input are a,1 return the 1", () {
+      var sum = Calculator.add("a,1");
+      expect(sum, 1);
+    });
+
+    test("Input are a,a return the 0", () {
+      var sum = Calculator.add("a,a");
+      expect(sum, 0);
+    });
+
+    test("Input are aa return the 0", () {
+      var sum = Calculator.add("aa");
+      expect(sum, 0);
+    });
+
   });
 
 

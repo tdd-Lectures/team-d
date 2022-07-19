@@ -1,14 +1,15 @@
 class Calculator {
   static int add(String number) {
-    if (number.isEmpty) {
-      return 0;
-    }
-    var numberList = number.split(",");
+    var numberList = splitIntoNumbers(number);
     switch (numberList.length) {
       case 1:
-        return int.tryParse(number) ?? 0;
+        return _convertStringToInt(number);
       case 2:
-        return add(numberList[0]) + add(numberList[1]);
+        return _convertStringToInt(numberList[0]) + _convertStringToInt(numberList[1]);
     }
   }
+
+  static List<String> splitIntoNumbers(String number) => number.split(",");
+
+  static int _convertStringToInt(String number) => int.tryParse(number) ?? 0;
 }
