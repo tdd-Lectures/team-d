@@ -1,13 +1,14 @@
 class Calculator {
   static int add(String number) {
-    var numberList = splitIntoNumbers(number);
-    switch (numberList.length) {
-      case 1:
-        return _convertStringToInt(number);
-      case 2:
-        return _convertStringToInt(numberList[0]) + _convertStringToInt(numberList[1]);
+    final numbers = splitIntoNumbers(number);
+    if (_hasOneNumber(numbers)) {
+      return _convertStringToInt(number);
     }
+    return _convertStringToInt(numbers.first)
+        + _convertStringToInt(numbers.last);
   }
+
+  static bool _hasOneNumber(List<String> numbers) => numbers.length == 1;
 
   static List<String> splitIntoNumbers(String number) => number.split(",");
 

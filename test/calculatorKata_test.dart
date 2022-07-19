@@ -2,61 +2,60 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tdd_intro/calculator.dart';
 
 void main() {
-  group("Empty String", () {
-    test("Input empty string return 0", () {
-      var sum = Calculator.add("");
-      expect(sum, 0);
-    });
+
+  test("Adding '' returns 0", () {
+    var sum = Calculator.add("");
+    expect(sum, 0);
   });
-  group("One number input", () {
-    test("Input is 1 return the same number", () {
+  group("Adding from a string with 1 number", () {
+    test("Adding '1' returns 1", () {
       var sum = Calculator.add("1");
       expect(sum, 1);
     });
-    test("Input is 2 return the same number", () {
+    test("Adding '2' returns 2", () {
       var sum = Calculator.add("2");
       expect(sum, 2);
     });
-    test("Input not a number return 0 ", (){
+    test("Adding 'a' returns 0", (){
       var sum = Calculator.add('a');
       expect(sum,0);
     });
   });
 
-  group("Input is two numbers", () {
-    test("Input are 1,2 return the 3", () {
+  group("Adding from a string with two numbers", () {
+    test("Adding '1,2' returns 3", () {
       var sum = Calculator.add("1,2");
       expect(sum, 3);
     });
-    test("Input are 2,2 return the 4", () {
+    test("Adding '2,2' returns  4", () {
       var sum = Calculator.add("2,2");
       expect(sum, 4);
     });
-    test("Input are ,1 return the 1", () {
+    test("Adding ',1' returns 1", () {
       var sum = Calculator.add(",1");
       expect(sum, 1);
     });
-    test("Input are 1, return the 1", () {
+    test("Adding '1,' returns 1", () {
       var sum = Calculator.add("1,");
       expect(sum, 1);
     });
 
-    test("Input are 1,a return the 1", () {
+    test("Adding '1,a' returns 1", () {
       var sum = Calculator.add("1,a");
       expect(sum, 1);
     });
 
-    test("Input are a,1 return the 1", () {
+    test("Adding 'a,1' returns 1", () {
       var sum = Calculator.add("a,1");
       expect(sum, 1);
     });
 
-    test("Input are a,a return the 0", () {
+    test("Adding 'a,a' returns 0", () {
       var sum = Calculator.add("a,a");
       expect(sum, 0);
     });
 
-    test("Input are aa return the 0", () {
+    test("Adding 'aa' returns 0", () {
       var sum = Calculator.add("aa");
       expect(sum, 0);
     });
