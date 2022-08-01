@@ -2,15 +2,29 @@
 
 A new Flutter application.
 
-## Getting Started
+## App ideas
 
-This project is a starting point for a Flutter application.
+- ### EPIC User Story #1
+    - As a BMW owner
+    - I want to see my vehicles state
+    - to know if there's any issue with one or more vehicles.
 
-A few resources to get you started if this is your first Flutter project:
+- ### User Story #1
+    - As a BMW owner
+    - I want to know if I left my vehicle unlocked
+    - Because I don't want someone to steal it
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- ### User Story #2
+    - As a BMW owner
+    - I want to know if I left any window open
+    - Because I don't want someone to steal it
+    
+- ### User Story #3
+    - As a BMW owner
+    - I want to know if I left any door open
+    - Because I don't want someone to steal it
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- ### User Story #4
+  - As a BMW owner
+  - I don't want other users to know my vehicles state
+  - because I value my privacy
