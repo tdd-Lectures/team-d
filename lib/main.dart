@@ -10,8 +10,65 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: VehicleState(VehicleStateGatewayFake(), "locked vehicle"),
     );
+  }
+}
+
+abstract class VehicleStateGateway {
+  Future<bool> isVehicleUnlocked(String vehicleId);
+}
+
+class VehicleStateGatewayFake implements VehicleStateGateway {
+  @override
+  Future<bool> isVehicleUnlocked(String vehicleId) {
+    if (vehicleId == "failing vehicle") {
+      return Future.error(Object());
+    }
+    if (vehicleId == "delayed unlocked vehicle") {
+      return Future.delayed(
+        Duration(seconds: 1),
+            () => true,
+      );
+    }
+    if (vehicleId == "unlocked vehicle") {
+      return Future.value(true);
+    }
+    return Future.value(false);
+  }
+}
+
+class VehicleState extends StatelessWidget {
+
+  final VehicleStateGateway _gateway;
+  final String vehicleId;
+
+  VehicleState(this._gateway, this.vehicleId, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      initialData: false,
+      future: _gateway.isVehicleUnlocked(vehicleId),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Unable to get data, please try again later...');
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Text(snapshot.data ? 'UNLOCKED' : 'OK');
+        }
+        return LoadingScreen();
+      },
+    );
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Loading...');
   }
 }
 
