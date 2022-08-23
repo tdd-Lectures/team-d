@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
 
 abstract class VehicleStateGateway {
   Future<bool> isVehicleUnlocked(String vehicleId);
-
 }
 
 class VehicleStateGatewayFake implements VehicleStateGateway {
@@ -29,7 +28,7 @@ class VehicleStateGatewayFake implements VehicleStateGateway {
     if (vehicleId == "delayed unlocked vehicle") {
       return Future.delayed(
         Duration(seconds: 1),
-            () => true,
+        () => true,
       );
     }
     if (vehicleId == "unlocked vehicle") {
@@ -37,12 +36,9 @@ class VehicleStateGatewayFake implements VehicleStateGateway {
     }
     return Future.value(false);
   }
-
-
 }
 
 class VehicleState extends StatelessWidget {
-
   final VehicleStateGateway _gateway;
   final String vehicleId;
 
@@ -60,8 +56,7 @@ class VehicleState extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return Column(
             children: [
-              Text('windows are open'),
-              Text('windows are closed'),
+              Text(snapshot.data ? 'windows are open' : 'windows are closed'),
               Text(snapshot.data ? 'UNLOCKED' : 'OK'),
             ],
           );
