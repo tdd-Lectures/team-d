@@ -50,6 +50,24 @@ void main() {
       findsOneWidget,
     );
   });
+
+
+  testWidgets('an open window displays windows are open',
+          (WidgetTester tester) async {
+        await pumpVehicleState(tester, VehicleStateGatewayFake(),
+            vehicleId: "unlocked vehicle");
+
+        expect(find.text('windows are open'), findsOneWidget);
+        expect(find.text('windows are closed'), findsNothing);
+      });
+
+  testWidgets('all closed window displays windows are closed',
+          (WidgetTester tester) async {
+        await pumpVehicleState(tester, VehicleStateGatewayFake(),
+            vehicleId: "unlocked vehicle");
+
+        expect(find.text('windows are closed'), findsOneWidget);
+      });
 }
 
 Future<void> pumpVehicleState(

@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
 
 abstract class VehicleStateGateway {
   Future<bool> isVehicleUnlocked(String vehicleId);
+
 }
 
 class VehicleStateGatewayFake implements VehicleStateGateway {
@@ -36,6 +37,8 @@ class VehicleStateGatewayFake implements VehicleStateGateway {
     }
     return Future.value(false);
   }
+
+
 }
 
 class VehicleState extends StatelessWidget {
@@ -55,7 +58,13 @@ class VehicleState extends StatelessWidget {
           return Text('Unable to get data, please try again later...');
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          return Text(snapshot.data ? 'UNLOCKED' : 'OK');
+          return Column(
+            children: [
+              Text('windows are open'),
+              Text('windows are closed'),
+              Text(snapshot.data ? 'UNLOCKED' : 'OK'),
+            ],
+          );
         }
         return LoadingScreen();
       },
