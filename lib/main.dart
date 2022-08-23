@@ -10,13 +10,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: VehicleState(VehicleStateGatewayFake(), "locked vehicle"),
+      home: VehicleStateWidget(VehicleStateGatewayFake(), "locked vehicle"),
     );
   }
 }
 
 abstract class VehicleStateGateway {
+  Future<VehicleState> getVehicleState(String vehicleId);  
   Future<bool> isVehicleUnlocked(String vehicleId);
+}
+
+class VehicleState {
+  bool isLocked;
+  bool areWindowsClosed;
+  VehicleState(this.isLocked, this.areWindowsClosed);
 }
 
 class VehicleStateGatewayFake implements VehicleStateGateway {
@@ -36,13 +43,18 @@ class VehicleStateGatewayFake implements VehicleStateGateway {
     }
     return Future.value(false);
   }
+
+  @override
+  Future<VehicleState> getVehicleState(String vehicleId) {
+    return Future.value(VehicleState(false, true));
+  }
 }
 
-class VehicleState extends StatelessWidget {
+class VehicleStateWidget extends StatelessWidget {
   final VehicleStateGateway _gateway;
   final String vehicleId;
 
-  VehicleState(this._gateway, this.vehicleId, {Key key}) : super(key: key);
+  VehicleStateWidget(this._gateway, this.vehicleId, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -52,11 +52,11 @@ void main() {
     expect(find.text('windows are closed'), findsOneWidget);
   });
 
-  testWidgets('an open window on a locked vehicle displays windows are open', (WidgetTester tester) async {
+  /*testWidgets('an open window on a locked vehicle displays windows are open', (WidgetTester tester) async {
     await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "locked vehicle with window open");
 
     expect(find.text('windows are open'), findsOneWidget);
-  });
+  });*/
 }
 
 Future<void> pumpVehicleState(
@@ -66,7 +66,7 @@ Future<void> pumpVehicleState(
 }) async {
   await tester.pumpWidget(
     MaterialApp(
-      home: VehicleState(gateway, vehicleId),
+      home: VehicleStateWidget(gateway, vehicleId),
     ),
   );
   await tester.pumpAndSettle();
