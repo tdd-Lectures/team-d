@@ -47,8 +47,19 @@ class VehicleStateGatewayFake implements VehicleStateGateway {
   }
 
   @override
+  Future<bool> areWindowsUnlocked(String vehicleId) {
+    if (vehicleId == "failing vehicle") {
+      return Future.error(Object());
+    }
+    if (vehicleId.contains("window open")) {
+      return Future.value(true);
+    }
+    return Future.value(false);
+  }
+
+  @override
   Future<VehicleState> getVehicleState(String vehicleId) async{
-    return Future.value(VehicleState(!await isVehicleUnlocked(vehicleId), false));
+    return Future.value(VehicleState(!await isVehicleUnlocked(vehicleId), !await areWindowsUnlocked(vehicleId)));
   }
 }
 

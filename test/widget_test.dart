@@ -28,7 +28,7 @@ void main() {
     await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "delayed unlocked vehicle");
 
     expect(find.byType(LoadingScreen), findsOneWidget);
-    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pump(Duration(seconds: 1));
   });
   testWidgets('when collecting the vehicle state fails displays error message', (WidgetTester tester) async {
     await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "failing vehicle");
@@ -52,11 +52,11 @@ void main() {
     expect(find.text('windows are closed'), findsOneWidget);
   });
 
-  // testWidgets('an open window on a locked vehicle displays windows are open', (WidgetTester tester) async {
-  //   await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "locked vehicle with window open");
-  //
-  //   expect(find.text('windows are open'), findsOneWidget);
-  // });
+  testWidgets('an open window on a locked vehicle displays windows are open', (WidgetTester tester) async {
+    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "locked vehicle with window open");
+
+    expect(find.text('windows are open'), findsOneWidget);
+  });
 }
 
 Future<void> pumpVehicleState(
@@ -70,4 +70,5 @@ Future<void> pumpVehicleState(
     ),
   );
   await tester.pumpAndSettle();
+
 }
