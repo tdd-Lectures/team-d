@@ -60,6 +60,20 @@ void main() {
 
     expect(find.text('windows are open'), findsOneWidget);
   });
+
+  testWidgets('an open door displays doors are open', (WidgetTester tester) async {
+    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors open");
+
+    expect(find.text('doors are open'), findsOneWidget);
+    expect(find.text('doors are closed'), findsNothing);
+  });
+
+  testWidgets('all closed doors displays doors are closed', (WidgetTester tester) async {
+    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors closed");
+
+    expect(find.text('doors are closed'), findsOneWidget);
+    expect(find.text('doors are open'), findsNothing);
+  });
 }
 
 Future<void> pumpVehicleState(

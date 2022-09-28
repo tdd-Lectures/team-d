@@ -28,11 +28,22 @@ class VehicleStateGatewayFake implements VehicleStateGateway {
     return Future.value(true);
   }
 
+  Future<bool> areDoorsClosed(String vehicleId) {
+    if (vehicleId == "failing vehicle") {
+      return Future.error(Object());
+    }
+    if (vehicleId.contains("doors open")) {
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
   @override
   Future<VehicleState> getVehicleState(String vehicleId) async {
     return Future.value(VehicleState(
       isLocked: await isVehicleLocked(vehicleId),
       areWindowsClosed: await areWindowsClosed(vehicleId),
+      areDoorsClosed: await areDoorsClosed(vehicleId),
     ));
   }
 }

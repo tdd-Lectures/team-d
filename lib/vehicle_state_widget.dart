@@ -12,7 +12,7 @@ class VehicleStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<VehicleState>(
-      initialData: VehicleState(isLocked: true, areWindowsClosed: true),
+      initialData: VehicleState(isLocked: true, areWindowsClosed: true, areDoorsClosed: true),
       future: _gateway.getVehicleState(vehicleId),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -23,6 +23,7 @@ class VehicleStateWidget extends StatelessWidget {
             children: [
               Text(snapshot.data.areWindowsClosed ? 'windows are closed' : 'windows are open'),
               Text(snapshot.data.isLocked ? 'OK' : 'UNLOCKED'),
+              Text(snapshot.data.areDoorsClosed ? 'doors are closed' : 'doors are open'),
             ],
           );
         }
