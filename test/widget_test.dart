@@ -52,11 +52,11 @@ void main() {
     expect(find.text('windows are closed'), findsOneWidget);
   });
 
-  /*testWidgets('an open window on a locked vehicle displays windows are open', (WidgetTester tester) async {
-    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "locked vehicle with window open");
-
-    expect(find.text('windows are open'), findsOneWidget);
-  });*/
+  // testWidgets('an open window on a locked vehicle displays windows are open', (WidgetTester tester) async {
+  //   await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "locked vehicle with window open");
+  //
+  //   expect(find.text('windows are open'), findsOneWidget);
+  // });
 }
 
 Future<void> pumpVehicleState(

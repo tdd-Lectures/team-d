@@ -16,13 +16,15 @@ class MyApp extends StatelessWidget {
 }
 
 abstract class VehicleStateGateway {
-  Future<VehicleState> getVehicleState(String vehicleId);  
+  Future<VehicleState> getVehicleState(String vehicleId);
+
   Future<bool> isVehicleUnlocked(String vehicleId);
 }
 
 class VehicleState {
   bool isLocked;
   bool areWindowsClosed;
+
   VehicleState(this.isLocked, this.areWindowsClosed);
 }
 
@@ -45,8 +47,8 @@ class VehicleStateGatewayFake implements VehicleStateGateway {
   }
 
   @override
-  Future<VehicleState> getVehicleState(String vehicleId) {
-    return Future.value(VehicleState(false, true));
+  Future<VehicleState> getVehicleState(String vehicleId) async{
+    return Future.value(VehicleState(!await isVehicleUnlocked(vehicleId), false));
   }
 }
 
@@ -58,9 +60,9 @@ class VehicleStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      initialData: false,
-      future: _gateway.isVehicleUnlocked(vehicleId),
+    return FutureBuilder<VehicleState>(
+      initialData: VehicleState(true, true),
+      future: _gateway.getVehicleState(vehicleId),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Unable to get data, please try again later...');
@@ -68,8 +70,8 @@ class VehicleStateWidget extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return Column(
             children: [
-              Text(snapshot.data ? 'windows are open' : 'windows are closed'),
-              Text(snapshot.data ? 'UNLOCKED' : 'OK'),
+              Text(snapshot.data.areWindowsClosed ? 'windows are closed' : 'windows are open'),
+              Text(snapshot.data.isLocked ? 'OK' : 'UNLOCKED'),
             ],
           );
         }
