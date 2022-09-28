@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tdd_intro/vehicle_state_gateway_fake.dart';
+import 'package:tdd_intro/vehicle_state_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,92 +14,6 @@ class MyApp extends StatelessWidget {
       ),
       home: VehicleStateWidget(VehicleStateGatewayFake(), "locked vehicle"),
     );
-  }
-}
-
-abstract class VehicleStateGateway {
-  Future<VehicleState> getVehicleState(String vehicleId);
-
-  Future<bool> isVehicleUnlocked(String vehicleId);
-}
-
-class VehicleState {
-  bool isLocked;
-  bool areWindowsClosed;
-
-  VehicleState(this.isLocked, this.areWindowsClosed);
-}
-
-class VehicleStateGatewayFake implements VehicleStateGateway {
-  @override
-  Future<bool> isVehicleUnlocked(String vehicleId) {
-    if (vehicleId == "failing vehicle") {
-      return Future.error(Object());
-    }
-    if (vehicleId == "delayed unlocked vehicle") {
-      return Future.delayed(
-        Duration(seconds: 1),
-        () => true,
-      );
-    }
-    if (vehicleId == "unlocked vehicle") {
-      return Future.value(true);
-    }
-    return Future.value(false);
-  }
-
-  @override
-  Future<bool> areWindowsUnlocked(String vehicleId) {
-    if (vehicleId == "failing vehicle") {
-      return Future.error(Object());
-    }
-    if (vehicleId.contains("window open")) {
-      return Future.value(true);
-    }
-    return Future.value(false);
-  }
-
-  @override
-  Future<VehicleState> getVehicleState(String vehicleId) async{
-    return Future.value(VehicleState(!await isVehicleUnlocked(vehicleId), !await areWindowsUnlocked(vehicleId)));
-  }
-}
-
-class VehicleStateWidget extends StatelessWidget {
-  final VehicleStateGateway _gateway;
-  final String vehicleId;
-
-  VehicleStateWidget(this._gateway, this.vehicleId, {Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<VehicleState>(
-      initialData: VehicleState(true, true),
-      future: _gateway.getVehicleState(vehicleId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Unable to get data, please try again later...');
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Column(
-            children: [
-              Text(snapshot.data.areWindowsClosed ? 'windows are closed' : 'windows are open'),
-              Text(snapshot.data.isLocked ? 'OK' : 'UNLOCKED'),
-            ],
-          );
-        }
-        return LoadingScreen();
-      },
-    );
-  }
-}
-
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text('Loading...');
   }
 }
 

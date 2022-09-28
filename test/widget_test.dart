@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tdd_intro/main.dart';
+import 'package:tdd_intro/loading_widget.dart';
+import 'package:tdd_intro/vehicle_state_gateway.dart';
+import '../lib/vehicle_state_gateway_fake.dart';
+import 'package:tdd_intro/vehicle_state_widget.dart';
 
 void main() {
   testWidgets('a locked vehicle display OK', (WidgetTester tester) async {
@@ -40,7 +43,7 @@ void main() {
   });
 
   testWidgets('an open window displays windows are open', (WidgetTester tester) async {
-    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "unlocked vehicle");
+    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "window open");
 
     expect(find.text('windows are open'), findsOneWidget);
     expect(find.text('windows are closed'), findsNothing);
@@ -70,5 +73,4 @@ Future<void> pumpVehicleState(
     ),
   );
   await tester.pumpAndSettle();
-
 }
