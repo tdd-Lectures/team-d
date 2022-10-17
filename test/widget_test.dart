@@ -75,11 +75,17 @@ void main() {
     expect(find.text('doors are open'), findsNothing);
   });
 
-  testWidgets('car not owned by user displays not authorized ', (WidgetTester tester) async  {
-    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors closed");
+  testWidgets('car not owned by user displays not authorized ', (WidgetTester tester) async {
+    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors closed", userId: 'not authorized');
 
     expect(find.text('not authorized'), findsOneWidget);
+  });
 
+  testWidgets('car not owned by user does not display doors closed when all doors are closed',
+      (WidgetTester tester) async {
+    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors closed", userId: 'not authorized');
+
+    expect(find.text('doors are closed'), findsNothing);
   });
 }
 
@@ -87,6 +93,7 @@ Future<void> pumpVehicleState(
   WidgetTester tester,
   VehicleStateGateway gateway, {
   String vehicleId = "",
+  String userId = "",
 }) async {
   await tester.pumpWidget(
     MaterialApp(
