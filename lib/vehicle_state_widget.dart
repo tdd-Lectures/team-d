@@ -24,6 +24,7 @@ class VehicleStateWidget extends StatelessWidget {
               Text(snapshot.data.areWindowsClosed ? 'windows are closed' : 'windows are open'),
               Text(snapshot.data.isLocked ? 'OK' : 'UNLOCKED'),
               Text(snapshot.data.areDoorsClosed ? 'doors are closed' : 'doors are open'),
+              Text('not authorized'),
             ],
           );
         }

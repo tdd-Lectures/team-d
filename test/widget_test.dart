@@ -74,6 +74,13 @@ void main() {
     expect(find.text('doors are closed'), findsOneWidget);
     expect(find.text('doors are open'), findsNothing);
   });
+
+  testWidgets('car not owned by user displays not authorized ', (WidgetTester tester) async  {
+    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors closed");
+
+    expect(find.text('not authorized'), findsOneWidget);
+
+  });
 }
 
 Future<void> pumpVehicleState(
