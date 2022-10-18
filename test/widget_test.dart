@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tdd_intro/loading_widget.dart';
+import 'package:tdd_intro/main.dart';
 import 'package:tdd_intro/vehicle_state_gateway.dart';
 import '../lib/vehicle_state_gateway_fake.dart';
 import 'package:tdd_intro/vehicle_state_widget.dart';
@@ -75,25 +76,28 @@ void main() {
     expect(find.text('doors are open'), findsNothing);
   });
 
-  testWidgets('car not owned by user displays not authorized ', (WidgetTester tester) async {
-    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors closed", userId: 'not authorized');
+  group("Authorization", () => {
+    testWidgets('car not owned by user does not show the vehicle state ', (WidgetTester tester) async {
+      await tester.pumpWidget(VehicleAuthorizationWidget());
 
-    expect(find.text('not authorized'), findsOneWidget);
-  });
+      expect(find.byType(VehicleStateWidget), findsNothing);
+    }),
 
-  testWidgets('car not owned by user does not display doors closed when all doors are closed',
-      (WidgetTester tester) async {
-    await pumpVehicleState(tester, VehicleStateGatewayFake(), vehicleId: "doors closed", userId: 'not authorized');
+    testWidgets('car owned by user shows the vehicle state ', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: VehicleAuthorizationWidget(userId: "authorized",)));
 
-    expect(find.text('doors are closed'), findsNothing);
+      expect(find.byType(VehicleStateWidget), findsOneWidget);
+    }),
+
+
   });
 }
+
 
 Future<void> pumpVehicleState(
   WidgetTester tester,
   VehicleStateGateway gateway, {
   String vehicleId = "",
-  String userId = "",
 }) async {
   await tester.pumpWidget(
     MaterialApp(

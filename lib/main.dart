@@ -17,6 +17,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class VehicleAuthorizationWidget extends StatelessWidget {
+  final String userId;
+
+  const VehicleAuthorizationWidget({Key key, this.userId}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return userId == "authorized"
+        ? VehicleStateWidget(VehicleStateGatewayFake(), "locked vehicle")
+        : Container();
+  }
+}
+
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
